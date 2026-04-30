@@ -1,0 +1,39 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data          # SQLite DB + session files persist on host
+    env_file:
+      - .env                      # All secrets (LinkedIn cookies, Gemini keys, etc.)
+    environment:
+      # Docker-specific overrides — take precedence over .env
+      - API_HOST=0.0.0.0
+      - PLAYWRIGHT_HEADLESS=true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.dashboard
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    environment:
+      # Point frontend to the backend container — NOT 127.0.0.1
+      - DASHBOARD_API_URL=http://backend:8000
+      - STREAMLIT_SERVER_HEADLESS=true
+    depends_on:
+      backend:
+        condition: service_healthy   # Wait until backend passes healthcheck
+    restart: unless-stopped

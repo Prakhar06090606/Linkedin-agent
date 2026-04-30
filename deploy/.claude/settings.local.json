@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find C:UsersVIDUSHIDocumentsedubild-social-agent -not -path */venv/* -not -path */__pycache__/* -not -path */.pytest_cache/* -type f)",
+      "Read(//c/Users/VIDUSHI/Documents/edubild-social-agent/**)",
+      "Bash(curl -s http://localhost:8000/health)"
+    ]
+  }
+}

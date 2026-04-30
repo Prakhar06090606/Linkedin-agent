@@ -1,0 +1,14 @@
+[Unit]
+Description=EduBuild Agent Dashboard
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/edubild-social-agent
+ExecStart=/usr/bin/python3 -m streamlit run frontend/dashboard.py --server.address 0.0.0.0 --server.port 8501
+Restart=always
+RestartSec=5
+EnvironmentFile=/opt/edubild-social-agent/.env
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,23 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.env
+*.db
+*.sqlite3
+.streamlit/
+# Zip archives
+*.zip
+# Log files
+*.log
+# Runtime data — contains session cookies, logs, API secrets
+data/linkedin_session.json
+data/agent.log
+data/agent_memory.db
+data/screenshots/
+# Prevent accidentally committing any new files under data/
+data/*.json
+data/*.log
+data/*.db
